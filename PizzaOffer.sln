@@ -15,9 +15,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaOffer.Common", "PizzaO
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{C3B2A6B4-97D5-45EE-B85D-FBC74D95376F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaOffer.DomainClasses.UnitTest", "Tests\PizzaOffer.DomainClasses.UnitTest\PizzaOffer.DomainClasses.UnitTest.csproj", "{34E705AA-2BDF-40CD-9D92-9F8768F161EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaOffer.DomainClasses.UnitTest", "Tests\PizzaOffer.DomainClasses.UnitTest\PizzaOffer.DomainClasses.UnitTest.csproj", "{34E705AA-2BDF-40CD-9D92-9F8768F161EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaOffer.Services.UnitTest", "Tests\PizzaOffer.Services.UnitTest\PizzaOffer.Services.UnitTest.csproj", "{2C654DE3-A910-44A3-A55E-D2D46A972F79}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaOffer.Services.UnitTest", "Tests\PizzaOffer.Services.UnitTest\PizzaOffer.Services.UnitTest.csproj", "{2C654DE3-A910-44A3-A55E-D2D46A972F79}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3BE68077-B2F4-41E9-8A14-2466ECDB9A2D}"
+	ProjectSection(SolutionItems) = preProject
+		.gitlab-ci.yml = .gitlab-ci.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
