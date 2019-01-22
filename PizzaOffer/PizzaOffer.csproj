@@ -13,7 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PizzaOffer.DataLayer\PizzaOffer.DataLayer.csproj" />
     <ProjectReference Include="..\PizzaOffer.Services\PizzaOffer.Services.csproj" />
   </ItemGroup>
 

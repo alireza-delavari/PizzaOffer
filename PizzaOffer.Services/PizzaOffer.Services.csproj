@@ -5,13 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\PizzaOffer.Common\PizzaOffer.Common.csproj" />
     <ProjectReference Include="..\PizzaOffer.DataLayer\PizzaOffer.DataLayer.csproj" />
-    <ProjectReference Include="..\PizzaOffer.DomainClasses\PizzaOffer.DomainClasses.csproj" />
   </ItemGroup>
 
 </Project>
