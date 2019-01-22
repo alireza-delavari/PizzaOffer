@@ -4,14 +4,13 @@ using System.Text;
 
 namespace PizzaOffer.DomainClasses
 {
-    public class User
+    public class User : BaseEntity
     {
         public User()
         {
             Orders = new HashSet<Order>();
         }
 
-        public int Id { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
         public string DisplayName { get; set; }

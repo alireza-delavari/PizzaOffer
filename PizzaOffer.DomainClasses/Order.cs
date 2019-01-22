@@ -4,14 +4,13 @@ using System.Text;
 
 namespace PizzaOffer.DomainClasses
 {
-    public class Order
+    public class Order : BaseEntity
     {
         public Order()
         {
             OrderDetails = new HashSet<OrderDetail>();
         }
 
-        public int Id { get; set; }
         public string Address { get; set; }
         public int Status { get; set; }
         public DateTimeOffset OrderCreatedDate { get; set; }

@@ -4,9 +4,8 @@ using System.Text;
 
 namespace PizzaOffer.DomainClasses
 {
-    public class OrderDetail
+    public class OrderDetail : BaseEntity
     {
-        public int Id { get; set; }
         public int OrderId { get; set; }
         public int FoodId { get; set; }
 
