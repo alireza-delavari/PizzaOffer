@@ -1,2 +1,2 @@
-﻿dotnet ef --startup-project ../PizzaOffer/ database update
+dotnet ef --startup-project ../PizzaOffer/ database update
 pause
