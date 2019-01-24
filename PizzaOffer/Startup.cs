@@ -55,6 +55,7 @@ namespace PizzaOffer
         {
             if (env.IsDevelopment())
             {
+                app.UseMiddleware<StackifyMiddleware.RequestTracerMiddleware>();
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
             }
