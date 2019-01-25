@@ -74,7 +74,14 @@ namespace PizzaOffer
             }
 
             app.UseHttpsRedirection();
-            app.UseMvc();
+            app.UseStaticFiles();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                  name: "areas",
+                  template: "{area:exists=Web}/{controller=Home}/{action=Index}/{id?}"
+                );
+            });
         }
     }
 }
