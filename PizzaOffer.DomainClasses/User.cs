@@ -24,7 +24,7 @@ namespace PizzaOffer.DomainClasses
         public bool IsUserActive { get; set; }
         public DateTimeOffset CreatedDate { get; set; }
         public DateTimeOffset? UpdatedDate { get; set; }
-        public DateTimeOffset? LastLoginDate { get; set; }
+        public DateTimeOffset? LastVisitDate { get; set; }
 
         public virtual ICollection<Order> Orders { get; set; }
     }
