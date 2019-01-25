@@ -3,7 +3,7 @@
     @inject SignInManager<IdentityUser> SignInManager
     @inject UserManager<IdentityUser> UserManager*@
 
-@using NewBridge.Services
+@*@using PizzaOffer.Services
 @inject IUsersService UsersService
 @inject IRolesService RolesService
 
@@ -17,7 +17,7 @@
             @if (await RolesService.IsUserInRole(UsersService.GetCurrentUserId(), @CustomRoles.Admin))
             {
                 <li>
-                    <a asp-area="Admin" asp-controller="Home" asp-action="Index" title="Admin">Admin</a>
+                    <a asp-area="Web" asp-controller="Home" asp-action="Index" title="Admin">Admin</a>
                 </li>
             }
             <li>
@@ -32,4 +32,4 @@ else
         <li><a asp-area="Web" asp-controller="Account" asp-action="Register">Register</a></li>
         <li><a asp-area="Web" asp-controller="Account" asp-action="Login">Log in</a></li>
     </ul>
-}
+}*@
