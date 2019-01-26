@@ -35,6 +35,7 @@ namespace PizzaOffer
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IUnitOfWork, ApplicationDbContext>();
+            services.AddScoped<IRolesService, RolesService>();
             services.AddSingleton<ISecurityService, SecurityService>();
             services.AddScoped<IDbInitializerService, DbInitializerService>();
 
