@@ -14,6 +14,7 @@ using PizzaOffer.DataLayer.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using PizzaOffer.Services;
+using PizzaOffer.Models;
 
 namespace PizzaOffer
 {
@@ -29,6 +30,9 @@ namespace PizzaOffer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<BearerTokensOptions>(options => Configuration.GetSection("BearerTokens").Bind(options));
+            services.Configure<ApiSettings>(options => Configuration.GetSection("ApiSettings").Bind(options));
+
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IUnitOfWork, ApplicationDbContext>();
             services.AddSingleton<ISecurityService, SecurityService>();
