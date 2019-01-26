@@ -19,6 +19,11 @@ namespace PizzaOffer.DomainClasses
     {
         public void Configure(EntityTypeBuilder<UserRole> builder)
         {
+            builder.HasKey(q => new { q.UserId, q.RoleId });
+            builder.HasIndex(q => q.UserId);
+            builder.HasIndex(q => q.RoleId);
+            builder.Property(q => q.UserId);
+            builder.Property(q => q.RoleId);
             builder.HasOne(q => q.User).WithMany(q => q.UserRoles).HasForeignKey(q => q.UserId);
             builder.HasOne(q => q.Role).WithMany(q => q.UserRoles).HasForeignKey(q => q.RoleId);
         }

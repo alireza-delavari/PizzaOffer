@@ -22,7 +22,7 @@ namespace PizzaOffer.DomainClasses
     {
         public void Configure(EntityTypeBuilder<Role> builder)
         {
-            builder.Property(e => e.Name).HasMaxLength(50).IsRequired();
+            builder.Property(e => e.Name).HasMaxLength(100).IsRequired();
             builder.HasIndex(e => e.Name).IsUnique();
         }
     }

@@ -22,7 +22,7 @@ namespace PizzaOffer.DomainClasses
     {
         public void Configure(EntityTypeBuilder<FoodCategory> builder)
         {
-            builder.Property(q => q.Name).HasMaxLength(50);
+            builder.Property(q => q.Name).HasMaxLength(100);
         }
     }
 }

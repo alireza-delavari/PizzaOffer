@@ -49,11 +49,11 @@ namespace PizzaOffer.DomainClasses
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.Property(q => q.UserName).HasMaxLength(50).IsRequired();
+            builder.Property(q => q.UserName).HasMaxLength(100).IsRequired();
             builder.HasIndex(q => q.UserName).IsUnique();
 
             builder.Property(q => q.Password).HasMaxLength(100).IsRequired();
-            builder.Property(q => q.DisplayName).HasMaxLength(50);
+            builder.Property(q => q.DisplayName).HasMaxLength(100);
             builder.Property(e => e.SerialNumber).HasMaxLength(450);
             builder.Property(e => e.AvatarImage).HasMaxLength(2048);
 

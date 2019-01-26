@@ -26,8 +26,8 @@ namespace PizzaOffer.DomainClasses
     {
         public void Configure(EntityTypeBuilder<Food> builder)
         {
-            builder.Property(q => q.FoodName).HasMaxLength(50).IsRequired();
-            builder.Property(q => q.Description).HasMaxLength(4096);
+            builder.Property(q => q.FoodName).HasMaxLength(100).IsRequired();
+            builder.Property(q => q.Description).HasMaxLength(6000);
             builder.HasOne(q => q.FoodCategory).WithMany(q => q.Foods).HasForeignKey(q => q.FoodCategoryId);
         }
     }
