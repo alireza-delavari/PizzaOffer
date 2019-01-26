@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\PizzaOffer.DataLayer\PizzaOffer.DataLayer.csproj" />
   </ItemGroup>
 
