@@ -16,7 +16,7 @@ namespace PizzaOffer.DomainClasses
             UserTokens = new HashSet<UserToken>();
         }
 
-        public string UserName { get; set; }
+        public string Username { get; set; }
         public string Password { get; set; }
         public string DisplayName { get; set; }
         public string PhoneNumber { get; set; }
@@ -49,8 +49,8 @@ namespace PizzaOffer.DomainClasses
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.Property(q => q.UserName).HasMaxLength(100).IsRequired();
-            builder.HasIndex(q => q.UserName).IsUnique();
+            builder.Property(q => q.Username).HasMaxLength(100).IsRequired();
+            builder.HasIndex(q => q.Username).IsUnique();
 
             builder.Property(q => q.Password).HasMaxLength(100).IsRequired();
             builder.Property(q => q.DisplayName).HasMaxLength(100);
