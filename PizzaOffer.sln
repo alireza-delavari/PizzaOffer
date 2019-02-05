@@ -21,10 +21,18 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaOffer.Services.UnitTes
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3BE68077-B2F4-41E9-8A14-2466ECDB9A2D}"
 	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
 		.gitignore = .gitignore
 		.gitlab-ci.yml = .gitlab-ci.yml
 		azure-pipelines.yml = azure-pipelines.yml
+		Dockerfile = Dockerfile
+		fandogh-manifest.yml = fandogh-manifest.yml
 		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".fandogh", ".fandogh", "{245976C9-0B6B-4CAA-8E32-8F8918106036}"
+	ProjectSection(SolutionItems) = preProject
+		.fandogh\config.yml = .fandogh\config.yml
 	EndProjectSection
 EndProject
 Global
@@ -68,6 +76,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{34E705AA-2BDF-40CD-9D92-9F8768F161EC} = {C3B2A6B4-97D5-45EE-B85D-FBC74D95376F}
 		{2C654DE3-A910-44A3-A55E-D2D46A972F79} = {C3B2A6B4-97D5-45EE-B85D-FBC74D95376F}
+		{245976C9-0B6B-4CAA-8E32-8F8918106036} = {3BE68077-B2F4-41E9-8A14-2466ECDB9A2D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C0AF4C83-D5B2-499B-A2B8-522B39D7F9FE}

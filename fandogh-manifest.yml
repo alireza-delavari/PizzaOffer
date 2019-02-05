@@ -1,0 +1,5 @@
+kind: ExternalService
+name: pizzaoffer
+spec:
+  image: pizzaoffer:${IMAGE_VERSION}
+  port: 80
