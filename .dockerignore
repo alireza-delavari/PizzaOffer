@@ -1,4 +1,4 @@
-.git/
+.git/*
 .vs/*
 .vscode
 
@@ -9,7 +9,7 @@
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
-#[Rr]elease/
+[Rr]elease/
 [Rr]eleases/
 x64/
 x86/
@@ -17,15 +17,3 @@ bld/
 [Bb]in/
 [Oo]bj/
 [Ll]og/
-
-# ReSharper is a .NET coding add-in
-_ReSharper*/
-*.[Rr]e[Ss]harper
-*.DotSettings.user
-
-# DotCover is a Code Coverage Tool
-*.dotCover
-
-# Visual Studio code coverage results
-*.coverage
-*.coveragexml
