@@ -41,18 +41,34 @@ namespace PizzaOffer
             services.AddScoped<IDbInitializerService, DbInitializerService>();
 
             // Configure Database
-            services.AddDbContext<ApplicationDbContext>(options =>
+            if (Configuration["ActiveDatabase"] == "postgresql")
             {
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection2")
-                    //.Replace("|DataDirectory|", Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "app_data"))
-                    , serverDbContextOptionsBuilder =>
-                    {
-                        var minutes = (int)TimeSpan.FromMinutes(3).TotalSeconds;
-                        serverDbContextOptionsBuilder.CommandTimeout(minutes);
-                        serverDbContextOptionsBuilder.EnableRetryOnFailure();
-                    });
-            });
+                services.AddEntityFrameworkNpgsql()
+                .AddDbContext<ApplicationDbContext>(options =>
+                {
+                    options.UseNpgsql(Configuration.GetConnectionString("postgresql")
+                        , serverDbContextOptionsBuilder =>
+                        {
+                            var minutes = (int)TimeSpan.FromMinutes(3).TotalSeconds;
+                            serverDbContextOptionsBuilder.CommandTimeout(minutes);
+                            serverDbContextOptionsBuilder.EnableRetryOnFailure();
+                        });
+                });
+            }
+            else if (Configuration["ActiveDatabase"] == "mssql")
+            {
+                services.AddDbContext<ApplicationDbContext>(options =>
+                {
+                    options.UseSqlServer(
+                        Configuration.GetConnectionString("mssql")
+                        , serverDbContextOptionsBuilder =>
+                        {
+                            var minutes = (int)TimeSpan.FromMinutes(3).TotalSeconds;
+                            serverDbContextOptionsBuilder.CommandTimeout(minutes);
+                            serverDbContextOptionsBuilder.EnableRetryOnFailure();
+                        });
+                });
+            }
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

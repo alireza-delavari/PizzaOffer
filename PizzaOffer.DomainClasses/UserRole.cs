@@ -6,7 +6,7 @@ using System.Text;
 
 namespace PizzaOffer.DomainClasses
 {
-    public class UserRole : IBaseEntity
+    public class UserRole : BaseEntityWithDates
     {
         public int UserId { get; set; }
         public int RoleId { get; set; }

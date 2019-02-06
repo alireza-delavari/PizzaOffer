@@ -16,7 +16,6 @@ namespace PizzaOffer.DomainClasses
 
         public string Address { get; set; }
         public OrderStatus Status { get; set; }
-        public DateTimeOffset CreatedDate { get; set; }
         public DateTimeOffset? PaymentDate { get; set; }
         public DateTimeOffset? DeliveredDate { get; set; }
         public int UserId { get; set; }
@@ -40,7 +39,6 @@ namespace PizzaOffer.DomainClasses
         public void Configure(EntityTypeBuilder<Order> builder)
         {
             builder.Property(q => q.Address).HasMaxLength(450);
-            builder.Property(q => q.CreatedDate).ValueGeneratedOnAdd().HasDefaultValueSql("SYSDATETIMEOFFSET()");
             builder.HasOne(q => q.User).WithMany(q => q.Orders).HasForeignKey(q => q.UserId);
         }
     }

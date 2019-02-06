@@ -2,30 +2,33 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PizzaOffer.DataLayer.Context;
 
 namespace PizzaOffer.DataLayer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190126105427_V2019_01_26_1423")]
-    partial class V2019_01_26_1423
+    [Migration("20190206133116_V2019_02_06_1701")]
+    partial class V2019_02_06_1701
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
                 .HasAnnotation("ProductVersion", "2.2.1-servicing-10028")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             modelBuilder.Entity("PizzaOffer.DomainClasses.Food", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTimeOffset>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasDefaultValueSql("now()");
 
                     b.Property<string>("Description")
                         .HasMaxLength(6000);
@@ -40,6 +43,10 @@ namespace PizzaOffer.DataLayer.Migrations
 
                     b.Property<long>("Price");
 
+                    b.Property<DateTimeOffset?>("UpdatedDate")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasDefaultValueSql("now()");
+
                     b.HasKey("Id");
 
                     b.HasIndex("FoodCategoryId");
@@ -50,11 +57,18 @@ namespace PizzaOffer.DataLayer.Migrations
             modelBuilder.Entity("PizzaOffer.DomainClasses.FoodCategory", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTimeOffset>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasDefaultValueSql("now()");
 
                     b.Property<string>("Name")
                         .HasMaxLength(100);
+
+                    b.Property<DateTimeOffset?>("UpdatedDate")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasDefaultValueSql("now()");
 
                     b.HasKey("Id");
 
@@ -64,21 +78,24 @@ namespace PizzaOffer.DataLayer.Migrations
             modelBuilder.Entity("PizzaOffer.DomainClasses.Order", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Address")
                         .HasMaxLength(450);
 
                     b.Property<DateTimeOffset>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("SYSDATETIMEOFFSET()");
+                        .HasDefaultValueSql("now()");
 
                     b.Property<DateTimeOffset?>("DeliveredDate");
 
                     b.Property<DateTimeOffset?>("PaymentDate");
 
                     b.Property<int>("Status");
+
+                    b.Property<DateTimeOffset?>("UpdatedDate")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasDefaultValueSql("now()");
 
                     b.Property<int>("UserId");
 
@@ -92,14 +109,21 @@ namespace PizzaOffer.DataLayer.Migrations
             modelBuilder.Entity("PizzaOffer.DomainClasses.OrderDetail", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int>("Count");
+
+                    b.Property<DateTimeOffset>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("now()");
 
                     b.Property<int>("FoodId");
 
                     b.Property<int>("OrderId");
+
+                    b.Property<DateTimeOffset?>("UpdatedDate")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasDefaultValueSql("now()");
 
                     b.HasKey("Id");
 
@@ -113,12 +137,19 @@ namespace PizzaOffer.DataLayer.Migrations
             modelBuilder.Entity("PizzaOffer.DomainClasses.Role", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTimeOffset>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasDefaultValueSql("now()");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100);
+
+                    b.Property<DateTimeOffset?>("UpdatedDate")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasDefaultValueSql("now()");
 
                     b.HasKey("Id");
 
@@ -131,8 +162,7 @@ namespace PizzaOffer.DataLayer.Migrations
             modelBuilder.Entity("PizzaOffer.DomainClasses.User", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int>("AccessFailedCount");
 
@@ -141,7 +171,7 @@ namespace PizzaOffer.DataLayer.Migrations
 
                     b.Property<DateTimeOffset>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("SYSDATETIMEOFFSET()");
+                        .HasDefaultValueSql("now()");
 
                     b.Property<string>("DisplayName")
                         .HasMaxLength(100);
@@ -175,7 +205,7 @@ namespace PizzaOffer.DataLayer.Migrations
 
                     b.Property<DateTimeOffset?>("UpdatedDate")
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasDefaultValueSql("SYSDATETIMEOFFSET()");
+                        .HasDefaultValueSql("now()");
 
                     b.Property<string>("Username")
                         .IsRequired()
@@ -184,12 +214,10 @@ namespace PizzaOffer.DataLayer.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("Email")
-                        .IsUnique()
-                        .HasFilter("[Email] IS NOT NULL");
+                        .IsUnique();
 
                     b.HasIndex("PhoneNumber")
-                        .IsUnique()
-                        .HasFilter("[PhoneNumber] IS NOT NULL");
+                        .IsUnique();
 
                     b.HasIndex("Username")
                         .IsUnique();
@@ -203,6 +231,14 @@ namespace PizzaOffer.DataLayer.Migrations
 
                     b.Property<int>("RoleId");
 
+                    b.Property<DateTimeOffset>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("now()");
+
+                    b.Property<DateTimeOffset?>("UpdatedDate")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasDefaultValueSql("now()");
+
                     b.HasKey("UserId", "RoleId");
 
                     b.HasIndex("RoleId");
@@ -215,14 +251,17 @@ namespace PizzaOffer.DataLayer.Migrations
             modelBuilder.Entity("PizzaOffer.DomainClasses.UserToken", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<DateTimeOffset>("AccessTokenExpiresDateTime");
 
                     b.Property<string>("AccessTokenHash")
                         .IsRequired()
                         .HasMaxLength(450);
+
+                    b.Property<DateTimeOffset>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("now()");
 
                     b.Property<DateTimeOffset>("RefreshTokenExpiresDateTime");
 
@@ -232,6 +271,10 @@ namespace PizzaOffer.DataLayer.Migrations
 
                     b.Property<string>("RefreshTokenIdHashSource")
                         .HasMaxLength(450);
+
+                    b.Property<DateTimeOffset?>("UpdatedDate")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasDefaultValueSql("now()");
 
                     b.Property<int>("UserId");
 
