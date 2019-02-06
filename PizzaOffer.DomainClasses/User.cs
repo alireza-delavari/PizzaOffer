@@ -28,8 +28,6 @@ namespace PizzaOffer.DomainClasses
         public bool IsUserActive { get; set; }
         public bool TwoFactorEnabled { get; set; }
         public bool LockoutEnabled { get; set; }
-        public DateTimeOffset CreatedDate { get; set; }
-        public DateTimeOffset? UpdatedDate { get; set; }
         public DateTimeOffset? LastVisitDate { get; set; }
         public DateTimeOffset? LockoutEnd { get; set; }
         
@@ -62,9 +60,6 @@ namespace PizzaOffer.DomainClasses
 
             builder.Property(q => q.Email).HasMaxLength(254);
             builder.HasIndex(q => q.Email).IsUnique();
-
-            builder.Property(q => q.CreatedDate).ValueGeneratedOnAdd().HasDefaultValueSql("SYSDATETIMEOFFSET()");
-            builder.Property(q => q.UpdatedDate).ValueGeneratedOnAddOrUpdate().HasDefaultValueSql("SYSDATETIMEOFFSET()");
         }
     }
 }

@@ -8,14 +8,17 @@ namespace PizzaOffer.DomainClasses
     {
 
     }
-
-    public abstract class BaseEntity<TKey> : IBaseEntity
+    public abstract class BaseEntityWithDates : IBaseEntity
+    {
+        public DateTimeOffset CreatedDate { get; set; }
+        public DateTimeOffset? UpdatedDate { get; set; }
+    }
+    public abstract class BaseEntityWithKey<TKey> : BaseEntityWithDates
     {
         public TKey Id { get; set; }
-        // Todo: Add CreatedDate and UpdatedDate here and config them to automatically get value on add and on update
     }
 
-    public abstract class BaseEntity : BaseEntity<int>
+    public abstract class BaseEntity : BaseEntityWithKey<int>
     {
 
     }
