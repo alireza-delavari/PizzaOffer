@@ -16,10 +16,14 @@ namespace PizzaOffer.Services
         Task<string> GetSerialNumberAsync(int userId);
         Task<User> FindUserAsync(string username, string password);
         Task<User> FindUserAsync(int userId);
+        Task<List<User>> GetAllUsersAsync();
         Task UpdateUserLastActivityDateAsync(int userId);
         Task<User> GetCurrentUserAsync();
+        string GetCurrentUserDisplayName();
+        string GetCurrentUserUsername();
         int GetCurrentUserId();
         Task<(bool Succeeded, string Error)> ChangePasswordAsync(User user, string currentPassword, string newPassword);
+        Task<(bool Succeeded, string Error)> CreateUserAsync(User user, string password);
     }
 
     public class UsersService : IUsersService
@@ -28,11 +32,13 @@ namespace PizzaOffer.Services
         private readonly DbSet<User> _users;
         private readonly ISecurityService _securityService;
         private readonly IHttpContextAccessor _contextAccessor;
+        private readonly IRolesService _roleService;
 
         public UsersService(
             IUnitOfWork uow,
-            ISecurityService securityService,
-            IHttpContextAccessor contextAccessor)
+            ISecurityService securityService,   
+            IHttpContextAccessor contextAccessor,
+            IRolesService roleService)
         {
             _uow = uow;
             _uow.CheckArgumentIsNull(nameof(_uow));
@@ -44,6 +50,9 @@ namespace PizzaOffer.Services
 
             _contextAccessor = contextAccessor;
             _contextAccessor.CheckArgumentIsNull(nameof(_contextAccessor));
+
+            _roleService = roleService;
+            _roleService.CheckArgumentIsNull(nameof(_roleService));
         }
 
         public Task<User> FindUserAsync(int userId)
@@ -80,10 +89,25 @@ namespace PizzaOffer.Services
             await _uow.SaveChangesAsync();
         }
 
+        public string GetCurrentUserDisplayName()
+        {
+            var claimsIdentity = _contextAccessor.HttpContext.User.Identity as ClaimsIdentity;
+            var userDataClaim = claimsIdentity?.FindFirst("DisplayName");
+            var userDisplayName = userDataClaim?.Value;
+            return userDisplayName;
+        }
+        public string GetCurrentUserUsername()
+        {
+            var claimsIdentity = _contextAccessor.HttpContext.User.Identity as ClaimsIdentity;
+            var userDataClaim = claimsIdentity?.FindFirst(ClaimTypes.Name);
+            var userUserName = userDataClaim?.Value;
+            return userUserName;
+        }
+
         public int GetCurrentUserId()
         {
             var claimsIdentity = _contextAccessor.HttpContext.User.Identity as ClaimsIdentity;
-            var userDataClaim = claimsIdentity?.FindFirst(ClaimTypes.UserData);
+            var userDataClaim = claimsIdentity?.FindFirst(ClaimTypes.NameIdentifier);
             var userId = userDataClaim?.Value;
             return string.IsNullOrWhiteSpace(userId) ? 0 : int.Parse(userId);
         }
@@ -105,6 +129,36 @@ namespace PizzaOffer.Services
             user.Password = _securityService.GetSha256Hash(newPassword);
             // user.SerialNumber = Guid.NewGuid().ToString("N"); // To force other logins to expire.
             await _uow.SaveChangesAsync();
+            return (true, string.Empty);
+        }
+
+        public Task<List<User>> GetAllUsersAsync()
+        {
+            return _users.ToListAsync();
+        }
+
+        public async Task<(bool Succeeded, string Error)> CreateUserAsync(User user, string password)
+        {
+            //Todo: need optimization
+            if (await _users.AnyAsync(q => q.Username == user.Username))
+            {
+                return (false, "This username is already taken.");
+            }
+            if (await _users.AnyAsync(q => q.Email == user.Email))
+            {
+                return (false, "This Email is already taken.");
+            }
+            if (await _users.AnyAsync(q => q.PhoneNumber == user.PhoneNumber))
+            {
+                return (false, "This Phone is already taken.");
+            }
+            user.Password = _securityService.GetSha256Hash(password);
+            user.SerialNumber = Guid.NewGuid().ToString("N");
+            _users.Add(user);
+            await _uow.SaveChangesAsync();
+
+            await _roleService.AddUserInRoleAsync(user, CustomRoles.User);
+
             return (true, string.Empty);
         }
     }

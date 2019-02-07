@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using PizzaOffer.Common;
+using PizzaOffer.DomainClasses;
 
 namespace PizzaOffer.Services
 {
@@ -25,12 +26,17 @@ namespace PizzaOffer.Services
     public class DbInitializerService : IDbInitializerService
     {
         private readonly IServiceScopeFactory _scopeFactory;
+        private readonly ISecurityService _securityService;
 
         public DbInitializerService(
-            IServiceScopeFactory scopeFactory)
+            IServiceScopeFactory scopeFactory,
+            ISecurityService securityService)
         {
             _scopeFactory = scopeFactory;
             _scopeFactory.CheckArgumentIsNull(nameof(_scopeFactory));
+
+            _securityService = securityService;
+            _securityService.CheckArgumentIsNull(nameof(_securityService));
         }
 
         public void Initialize()
@@ -44,14 +50,51 @@ namespace PizzaOffer.Services
             }
         }
 
-        public void SeedData()
+        public async void SeedData()
         {
             using (var serviceScope = _scopeFactory.CreateScope())
             {
                 using (var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>())
                 {
                     // add seed data here
-                    context.SaveChanges();
+                    var adminRole = new Role { Name = CustomRoles.Admin };
+                    var userRole = new Role { Name = CustomRoles.User };
+                    var EditorRole = new Role { Name = CustomRoles.Editor };
+                    if (!await context.Set<Role>().AnyAsync())
+                    {
+                        context.Add(adminRole);
+                        context.Add(userRole);
+                        context.Add(EditorRole);
+                        context.SaveChanges();
+                    }
+
+                    // Add Admin user
+                    //todo: add from appSetting.json (appSetting.Production.json)
+                    if (!await context.Set<User>().AnyAsync(q => q.Username == "Alireza"))
+                    {
+                        var adminUser = new User
+                        {
+                            Username = "Alireza",
+                            DisplayName = "علیرضا",
+                            IsUserActive = true,
+                            LastVisitDate = null,
+                            //todo: !important get password from appSetting.json (appSetting.Production.json)
+                            Password = _securityService.GetSha256Hash("alirezaisadmin321654987"),
+                            SerialNumber = Guid.NewGuid().ToString("N"),
+                            Email = "test@gmail.com",
+                            IsEmailConfirmed = true,
+                            PhoneNumber = "09116662266",
+                            IsPhoneConfirmed = true
+                        };
+                        context.Add(adminUser);
+                        context.SaveChanges();
+
+                        context.Add(new UserRole { Role = await context.Set<Role>().FirstOrDefaultAsync(x => x.Name == CustomRoles.Admin), User = adminUser });
+                        context.Add(new UserRole { Role = await context.Set<Role>().FirstOrDefaultAsync(x => x.Name == CustomRoles.Editor), User = adminUser });
+                        context.Add(new UserRole { Role = await context.Set<Role>().FirstOrDefaultAsync(x => x.Name == CustomRoles.User), User = adminUser });
+
+                        context.SaveChanges();
+                    }
                 }
             }
         }
