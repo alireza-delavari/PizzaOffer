@@ -19,10 +19,8 @@
 
   <ItemGroup>
     <Folder Include="Areas\Web\Data\" />
-    <Folder Include="Areas\Web\Models\" />
     <Folder Include="Controllers\" />
     <Folder Include="Data\" />
-    <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
 </Project>
