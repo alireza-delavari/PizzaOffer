@@ -89,6 +89,23 @@ namespace PizzaOffer.Areas.Web.Controllers
 
         [AllowAnonymous]
         [HttpGet("[action]")]
+        [HttpPost("[action]")]
+        public async Task<IActionResult> Logout(string returnUrl = null)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+            else
+            {
+                return RedirectToAction(nameof(HomeController.Index), "Home");
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpGet("[action]")]
         public IActionResult Register(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
