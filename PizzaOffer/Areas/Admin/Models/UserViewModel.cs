@@ -1,7 +1,7 @@
 ﻿using PizzaOffer.Areas.Web.Models.Common;
 using System;
 
-namespace PizzaOffer.Areas.Web.Models.Admin
+namespace PizzaOffer.Areas.Admin.Models
 {
     public class UserViewModel : BaseViewModel
     {

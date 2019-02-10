@@ -17,7 +17,7 @@
             @if (RolesService.IsCurrentUserInRoles(CustomRoles.Admin))
             {
                 <li>
-                    <a asp-area="Web" asp-controller="Admin" asp-action="Index" title="Admin">Admin</a>
+                    <a asp-area="Admin" asp-controller="Home" asp-action="Index" title="Admin">Admin</a>
                 </li>
             }
             <li>

@@ -8,16 +8,16 @@ using PizzaOffer.Areas.Web.Models.Admin;
 using PizzaOffer.Common;
 using PizzaOffer.Services;
 
-namespace PizzaOffer.Areas.Web.Controllers.Admin
+namespace PizzaOffer.Areas.Admin.Controllers
 {
-    [Area("Web")]
-    [Route("[controller]/[action]")]
+    [Area("Admin")]
+    [Route("[Area]/[controller]/[action]")]
     [Authorize(Policy = CustomRoles.Admin)]
-    public class AdminController : Controller
+    public class HomeController : Controller
     {
         private readonly IUsersService _usersService;
 
-        public AdminController(IUsersService usersService)
+        public HomeController(IUsersService usersService)
         {
             this._usersService = usersService;
             _usersService.CheckArgumentIsNull(nameof(usersService));
