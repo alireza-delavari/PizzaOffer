@@ -11,6 +11,7 @@ using PizzaOffer.Services;
 namespace PizzaOffer.Areas.Web.Controllers.Admin
 {
     [Area("Web")]
+    [Route("[controller]/[action]")]
     [Authorize(Policy = CustomRoles.Admin)]
     public class AdminController : Controller
     {

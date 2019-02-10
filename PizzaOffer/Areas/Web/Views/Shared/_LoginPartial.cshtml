@@ -12,9 +12,9 @@
     <form asp-area="Web" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="navbar-right">
         <ul class="nav navbar-nav navbar-right">
             <li>
-                <a asp-area="Web" asp-controller="Manage" asp-action="Index" title="Manage">Hello @UsersService.GetCurrentUserUsername() !</a>
+                <a asp-area="Web" asp-controller="Manage" asp-action="Index" title="Manage">@UsersService.GetCurrentUserUsername()</a>
             </li>
-            @if (await RolesService.IsUserInRoleAsync(UsersService.GetCurrentUserId(), @CustomRoles.Admin))
+            @if (RolesService.IsCurrentUserInRoles(CustomRoles.Admin))
             {
                 <li>
                     <a asp-area="Web" asp-controller="Admin" asp-action="Index" title="Admin">Admin</a>

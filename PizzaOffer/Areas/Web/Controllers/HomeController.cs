@@ -9,6 +9,7 @@ using PizzaOffer.Areas.Web.Models;
 namespace PizzaOffer.Areas.Web.Controllers
 {
     [Area("Web")]
+    [Route("[controller]/[action]")]
     public class HomeController : Controller
     {
         public IActionResult Index()

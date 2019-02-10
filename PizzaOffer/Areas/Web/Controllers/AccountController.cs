@@ -16,7 +16,7 @@ using PizzaOffer.Services;
 namespace PizzaOffer.Areas.Web.Controllers
 {
     [Area("Web")]
-    [Route("[area]/[controller]")]
+    [Route("[controller]")]
     public class AccountController : Controller
     {
         private readonly IUsersService _usersService;

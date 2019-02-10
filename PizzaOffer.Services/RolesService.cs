@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using PizzaOffer.Common;
 using PizzaOffer.DataLayer.Context;
 using PizzaOffer.DomainClasses;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace PizzaOffer.Services
@@ -16,6 +18,7 @@ namespace PizzaOffer.Services
         Task AddUserInRoleAsync(int userId, string roleName);
         Task AddUserInRoleAsync(User user, string roleName);
         Task AddUserInRoleAsync(User user, Role role);
+        bool IsCurrentUserInRoles(string roleName);
     }
 
     public class RolesService : IRolesService
@@ -24,11 +27,17 @@ namespace PizzaOffer.Services
         private readonly DbSet<Role> _roles;
         private readonly DbSet<User> _users;
         private readonly DbSet<UserRole> _userRole;
+        private readonly IHttpContextAccessor _contextAccessor;
 
-        public RolesService(IUnitOfWork uow)
+        public RolesService(
+            IUnitOfWork uow,
+            IHttpContextAccessor contextAccessor)
         {
             _uow = uow;
             _uow.CheckArgumentIsNull(nameof(_uow));
+
+            _contextAccessor = contextAccessor;
+            _contextAccessor.CheckArgumentIsNull(nameof(_contextAccessor));
 
             _roles = _uow.Set<Role>();
             _users = _uow.Set<User>();
@@ -83,6 +92,13 @@ namespace PizzaOffer.Services
         {
             _userRole.Add(new UserRole { User = user, Role = role });
             await _uow.SaveChangesAsync();
+        }
+
+        public bool IsCurrentUserInRoles(string roleName)
+        {
+            var claimsIdentity = _contextAccessor.HttpContext.User.Identity as ClaimsIdentity;
+            var isInRole = claimsIdentity?.FindAll(ClaimTypes.Role).Any(q => q.Value == roleName);
+            return isInRole == true;
         }
     }
 }
