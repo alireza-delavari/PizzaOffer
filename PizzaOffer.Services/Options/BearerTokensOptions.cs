@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PizzaOffer.Services
+namespace PizzaOffer.Services.Options
 {
     public class BearerTokensOptions
     {

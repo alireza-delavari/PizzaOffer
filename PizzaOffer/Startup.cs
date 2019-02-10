@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Http;
 using PizzaOffer.Services;
 using PizzaOffer.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using PizzaOffer.Services.Options;
 
 namespace PizzaOffer
 {
@@ -39,8 +40,9 @@ namespace PizzaOffer
             });
 
             services.Configure<BearerTokensOptions>(options => Configuration.GetSection("BearerTokens").Bind(options));
+            services.Configure<AdminUserSeedOptions>(options => Configuration.GetSection("AdminUserSeed").Bind(options));
             services.Configure<ApiSettings>(options => Configuration.GetSection("ApiSettings").Bind(options));
-
+            
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IAntiForgeryCookieService, AntiForgeryCookieService>();
             services.AddScoped<IUnitOfWork, ApplicationDbContext>();

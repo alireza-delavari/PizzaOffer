@@ -16,6 +16,7 @@ namespace PizzaOffer.Services
         Task<string> GetSerialNumberAsync(int userId);
         Task<User> FindUserAsync(string username, string password);
         Task<User> FindUserAsync(int userId);
+        Task<User> FindUserAsync(string username);
         Task<List<User>> GetAllUsersAsync();
         Task UpdateUserLastActivityDateAsync(int userId);
         Task<User> GetCurrentUserAsync();
@@ -64,6 +65,11 @@ namespace PizzaOffer.Services
         {
             var passwordHash = _securityService.GetSha256Hash(password);
             return _users.FirstOrDefaultAsync(x => x.Username == username && x.Password == passwordHash);
+        }
+
+        public Task<User> FindUserAsync(string username)
+        {
+            return _users.FirstOrDefaultAsync(x => x.Username == username);
         }
 
         public async Task<string> GetSerialNumberAsync(int userId)
@@ -161,5 +167,6 @@ namespace PizzaOffer.Services
 
             return (true, string.Empty);
         }
+
     }
 }

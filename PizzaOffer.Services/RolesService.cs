@@ -12,6 +12,8 @@ namespace PizzaOffer.Services
 {
     public interface IRolesService
     {
+        Task<Role> FindRoleAsync(string roleName);
+        Task<Role> FindRoleAsync(int roleId);
         Task<List<Role>> FindUserRolesAsync(int userId);
         Task<bool> IsUserInRoleAsync(int userId, string roleName);
         Task<List<User>> FindUsersInRoleAsync(string roleName);
@@ -19,6 +21,7 @@ namespace PizzaOffer.Services
         Task AddUserInRoleAsync(User user, string roleName);
         Task AddUserInRoleAsync(User user, Role role);
         bool IsCurrentUserInRoles(string roleName);
+        Task<(bool Succeeded, string Error)> CreateRoleAsync(Role role);
     }
 
     public class RolesService : IRolesService
@@ -99,6 +102,37 @@ namespace PizzaOffer.Services
             var claimsIdentity = _contextAccessor.HttpContext.User.Identity as ClaimsIdentity;
             var isInRole = claimsIdentity?.FindAll(ClaimTypes.Role).Any(q => q.Value == roleName);
             return isInRole == true;
+        }
+
+        public Task<Role> FindRoleAsync(string roleName)
+        {
+            return _roles.FirstOrDefaultAsync(q => q.Name == roleName);
+        }
+
+        public Task<Role> FindRoleAsync(int roleId)
+        {
+            return _roles.FindAsync(roleId);
+        }
+
+        public async Task<(bool Succeeded, string Error)> CreateRoleAsync(Role role)
+        {
+            if (await _roles.AnyAsync(q => q.Name == role.Name))
+            {
+                return (false, "This role is already exists.");
+            }
+
+            await _roles.AddAsync(role);
+
+            try
+            {
+                await _uow.SaveChangesAsync();
+            }
+            catch (System.Exception ex)
+            {
+                return (false, ex.Message);
+            }
+
+            return (true, string.Empty);
         }
     }
 }
