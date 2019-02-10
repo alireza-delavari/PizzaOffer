@@ -1,0 +1,8 @@
+﻿@using PizzaOffer.Areas.Admin.Helpers
+<div class="sidebar sidebar-collapse collapse">
+    <a class="@Html.IsSelected("Home")" asp-area="Admin" asp-controller="Home" asp-action="Index">Home</a>
+    <a class="@Html.IsSelected("Users")" asp-area="Admin" asp-controller="Users" asp-action="Index">Users</a>
+    <a class="@Html.IsSelected("News")" href="#news">News</a>
+    <a class="@Html.IsSelected("Contact")" href="#contact">Contact</a>
+    <a class="@Html.IsSelected("About")" href="#about">About</a>
+</div>
