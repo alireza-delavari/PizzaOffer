@@ -8,6 +8,7 @@ using PizzaOffer.Common.Utilities;
 using Xunit;
 using PizzaOffer.DomainClasses;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
 
 namespace PizzaOffer.Services.UnitTest
 {
@@ -22,6 +23,7 @@ namespace PizzaOffer.Services.UnitTest
             services.AddEntityFrameworkInMemoryDatabase()
                 .AddDbContext<ApplicationDbContext>(options => options.UseInMemoryDatabase("PizzaOfferInMemory1"));
 
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IUnitOfWork, ApplicationDbContext>();
             services.AddScoped<IRolesService, RolesService>();
 
