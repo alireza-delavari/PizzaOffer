@@ -14,18 +14,27 @@ namespace PizzaOffer.DataLayer.Context
         public ApplicationDbContext(DbContextOptions options) : base(options)
         { }
 
+        public virtual DbSet<User> Users { set; get; }
+        public virtual DbSet<Role> Roles { set; get; }
+        public virtual DbSet<UserRole> UserRoles { set; get; }
+        public virtual DbSet<UserToken> UserTokens { set; get; }
+        public virtual DbSet<Order> Orders { set; get; }
+        public virtual DbSet<OrderDetail> OrderDetails { set; get; }
+        public virtual DbSet<Food> Foods { set; get; }
+        public virtual DbSet<FoodCategory> FoodCategories { set; get; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // it should be placed here, otherwise it will rewrite the following settings!
             base.OnModelCreating(modelBuilder);
 
             var entitiesAssembly = typeof(IBaseEntity).Assembly;
-
-            modelBuilder.RegisterAllEntities<IBaseEntity>(entitiesAssembly);
+            
+            //modelBuilder.RegisterAllEntities<IBaseEntity>(entitiesAssembly);
             modelBuilder.RegisterEntityTypeConfiguration(entitiesAssembly);
             modelBuilder.AddRestrictDeleteBehaviorConvention();
             //modelBuilder.AddSequentialGuidForIdConvention();
-            modelBuilder.AddPluralizingTableNameConvention();
+            //modelBuilder.AddPluralizingTableNameConvention();
             ApplyBaseClassConfiguration(modelBuilder);
             //Todo: override savechanges methodes and clean texts
         }
