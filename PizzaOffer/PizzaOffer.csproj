@@ -21,7 +21,6 @@
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Web\Data\" />
     <Folder Include="Areas\Web\Views\Shared\" />
-    <Folder Include="Controllers\" />
     <Folder Include="Data\" />
   </ItemGroup>
 
